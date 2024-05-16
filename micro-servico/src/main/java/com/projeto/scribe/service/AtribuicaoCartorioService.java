@@ -1,6 +1,7 @@
 package com.projeto.scribe.service;
 
 import com.projeto.scribe.dto.AtribuicaoCartorioDTO;
+import com.projeto.scribe.dto.AtribuicaoCartorioPageDTO;
 import com.projeto.scribe.dto.ResultadoDTO;
 import com.projeto.scribe.model.AtribuicaoCartorio;
 import com.projeto.scribe.repository.AtribuicaoCartorioRepository;
@@ -10,6 +11,7 @@ import com.projeto.scribe.util.JsonUtil;
 import com.projeto.scribe.util.Mensagens;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -29,11 +31,20 @@ public class AtribuicaoCartorioService {
         return atribuicaoCartorioRepository.findAll();
     }
 
-    public Page<AtribuicaoCartorio> findByFilter(Filtro filtro) {
+    public Page<AtribuicaoCartorioPageDTO> findByFilter(Filtro filtro) {
         AtribuicaoCartorioSpecification atribuicaoCartorioSpecification = new AtribuicaoCartorioSpecification();
         Specification<AtribuicaoCartorio> tranSpec = atribuicaoCartorioSpecification.build(filtro);
         Pageable pageable = atribuicaoCartorioSpecification.buildPageable(filtro);
-        return atribuicaoCartorioRepository.findAll(tranSpec, pageable);
+        Page<AtribuicaoCartorio> atribuicaoCartoriosPage = atribuicaoCartorioRepository.findAll(tranSpec, pageable);
+
+        List<AtribuicaoCartorioPageDTO> atribuicaoSimplificados = atribuicaoCartoriosPage.map(atribuicaoCartorio -> AtribuicaoCartorioPageDTO
+                        .builder()
+                        .id(atribuicaoCartorio.getId())
+                        .nome(atribuicaoCartorio.getNome())
+                        .build())
+                .getContent();
+
+        return new PageImpl<>(atribuicaoSimplificados, pageable, atribuicaoCartoriosPage.getTotalElements());
     }
 
     public ResultadoDTO<String> getAtribuicaoById(String id){
@@ -61,6 +72,7 @@ public class AtribuicaoCartorioService {
         return new ResultadoDTO<>(true, JsonUtil.converteJson(atribuicaoCartorioSalvo), null);
     }
 
+    @Transactional
     public ResultadoDTO<String> editarAtribuicao(String id, AtribuicaoCartorioDTO atribuicaoCartorioDTO){
         Optional<AtribuicaoCartorio> atribuicaoCartorioOptional = atribuicaoCartorioRepository.findById(id);
         AtribuicaoCartorio atribuicaoCartorioOriginal;

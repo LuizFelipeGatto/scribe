@@ -59,6 +59,7 @@ public class SituacaoCartorioService {
         return new ResultadoDTO<>(true, JsonUtil.converteJson(situacaoCartorioSalvo), null);
     }
 
+    @Transactional
     public ResultadoDTO<String> editarSituacao(String id, SituacaoCartorioDTO situacaoCartorioDTO){
         Optional<SituacaoCartorio> situacaoCartorioOptional = situacaoCartorioRepository.findById(id);
         SituacaoCartorio situacaoCartorio;

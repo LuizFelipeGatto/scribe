@@ -7,13 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AtribuicaoCartorioDTO {
+public class CartorioDTO {
 
-    private String id;
+    private Integer id;
 
     private String nome;
-
-    private Boolean situacao;
-
-
 }

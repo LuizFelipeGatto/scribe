@@ -8,6 +8,10 @@ public class Mensagens {
 
     public static final String ATRIBUICAO_NAO_ENCONTRADA = "Atribuição não existe.";
 
+    public static final String ATIBUICAO_FALTANTE = "Atribuição faltante.";
+
+    public static final String SITUACAO_FALTANTE = "Situação faltante.";
+
     public static final String REGISTRO_DUPLICADO = "Nome já informado no registro com código {id}.";
 
     public static final String REGISTRO_JA_CADASTRADO = "Registro já cadastrado.";
