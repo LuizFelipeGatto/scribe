@@ -76,11 +76,10 @@ As operações seguirão o seguinte padrão: http://localhost:9564/nomeTabela
             JSON:
              ```{
                  {
-                    "id": "idInserir",
                     "nome": "nomeAlterar",
                     "observacao": "observacaoAlterar",
-                    "situacao": {
-                        "id": "idSituacaoCadastrada"
+                    "situacaoCartorio": {
+                        "id": "SIT_ATIVO"
                     },
                     "atribuicoes": [
                         {
@@ -99,7 +98,7 @@ As operações seguirão o seguinte padrão: http://localhost:9564/nomeTabela
                  {
                     "nome": "nomeAlterar",
                     "observacao": "observacaoAlterar",
-                    "situacao": {
+                    "situacaoCartorio": {
                         "id": "idSituacaoCadastrada"
                     },
                     "atribuicoes": [
